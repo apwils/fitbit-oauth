@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <button onclick="authenticate()" id="auth">Auth</button>
+    <p id="oauth"></p>
+</body>
+
+<script>
+    const authenticate = async () => {
+        const response = await fetch('/api/oauth')
+        const { url } = await response.json()
+        window.location.href = url
+    }
+
+    function getCookie(name) {
+        var cookieArr = document.cookie.split(";");
+        for (var i = 0; i < cookieArr.length; i++) {
+            var cookiePair = cookieArr[i].split("=");
+            if (name == cookiePair[0].trim()) {
+                return decodeURIComponent(cookiePair[1]);
+            }
+        }
+        return null;
+    }
+
+    let data
+
+    console.log(getCookie('OAUTH'))
+    if (getCookie('OAUTH')) {
+        document.getElementById('auth').remove()
+
+        document.getElementById('oauth').innerHTML = getCookie('OAUTH')
+    }
+
+
+
+</script>
+
+</html>
